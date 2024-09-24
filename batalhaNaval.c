@@ -1,40 +1,99 @@
 #include <stdio.h>
 
-// Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+int main () {
 
-int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Sugestão: Declare uma matriz bidimensional para representar o tabuleiro (Ex: int tabuleiro[5][5];).
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
-    // Sugestão: Utilize `printf` para exibir as coordenadas de cada parte dos navios.
+    // Declarando a matriz do tabuleiro
+    int tabuleiro[10][10];
+    /*
+    Navio Vertical = 1,5 e 2,5
+    Navio Horizontal = 7,7 e 7,8
+    Primeiro Navio diagonal = 3,3 e 4,4
+    Segundo Navio diagonal = 9,0 e 8,1
+    */
+    // Declarando os poderes
+    int cone[3][5] = {
+        {0,0,1,0,0},
+        {0,1,1,1,0},
+        {1,1,1,1,1}
+    };
+    int cruz[3][5] = {
+        {0,0,1,0,0},
+        {1,1,1,1,1},
+        {0,0,1,0,0}
+    };
+    int octaedro[3][5] = {
+        {0,0,1,0,0},
+        {0,1,1,1,0},
+        {0,0,1,0,0}
+    };
+    int opcao;
+    int y,x;
 
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
-    // Sugestão: Expanda o tabuleiro para uma matriz 10x10.
-    // Sugestão: Posicione quatro navios no tabuleiro, incluindo dois na diagonal.
-    // Sugestão: Exiba o tabuleiro completo no console, mostrando 0 para posições vazias e 3 para posições ocupadas.
 
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
+    // Populando o tabuleiro com o valor 0 para as casas vazias e valor 3 para as casas com navios
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            if ((i == 1 && j == 5) || (i == 2 && j == 5) || (i == 7 && j == 7) || (i == 7 && j == 8)
+            || (i == 3 && j == 3) || (i == 4 && j == 4) || (i == 9 && j == 0) || (i == 8 && j == 1)) {
+                tabuleiro[i][j] = 3;
+                printf("Parte de um navio posicionado na coordenada [%d][%d].\n", i, j);
+                continue;
+            } else {
+                tabuleiro[i][j] = 0;
+            }
+        } 
+    }   
 
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
+    while (1) {
+        printf("Escolha o super poder:\n");
+        printf("1. Cone\n"); 
+        printf("2. Cruz\n"); 
+        printf("3. Octaedro\n"); 
+        printf("Opção:"); 
+        scanf("%d", &opcao);
+        printf("Escolha a coordenada X para usar o superpoder\n");
+        printf("Deve ser maior ou igual a 1, e menor ou igual a 8: ");
+        scanf("%d", &x);
+        printf("Escolha a coordenada Y para usar o superpoder\n");
+        printf("Deve ser maior ou igual a 2, e menor ou igual a 7: ");
+        scanf("%d", &y);
+        
+        switch (opcao) {
+        case 1: 
+            for(int i = x-1, a = 0; i<=x+1; i++, a++) {
+                for(int j = y-2, b = 0; j<=y+2; j++, b++) {
+                    tabuleiro[i][j] = cone[a][b];
+                }
+            }
+            break;
+        case 2:
+            for(int i = x-1, a = 0; i<=x+1; i++, a++) {
+                for(int j = y-2, b = 0; j<=y+2; j++, b++) {
+                    tabuleiro[i][j] = cruz[a][b];
+                }
+            }
+            break;
+        case 3:
+            for(int i = x-1, a = 0; i<=x+1; i++, a++) {
+                for(int j = y-2, b = 0; j<=y+2; j++, b++) {
+                    tabuleiro[i][j] = octaedro[a][b];
+                }
+            }
+            break;
+        default:
+            break;
+        }
+        break;
+    }
 
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
+
+    printf("Imprimindo o tabuleiro completo:\n");
+    for (int i = 0; i < 10; i++) {
+        for (int j = 0; j < 10; j++) {
+            printf("%d ", tabuleiro[i][j]);
+        } 
+        printf("\n");
+    }
 
     return 0;
 }
